@@ -53,15 +53,18 @@ This is the **XM Cloud Front End Application Starter Kits** repository containin
 - Independent package.json for each example
 
 **DMZ git flow (planned for future):**
-- Shared main repo (`upstream repository`) with two key branches: `main` and `dmz`
-- Each contributor uses their own fork as workspace
-- Feature branches sourced from `main`, PRs merged to `dmz` branch
-- `main` branch always clean (deployable, branchable, reliable) - no direct PRs
-- Developers push to feature branches in fork, create PRs to `dmz`
-- PRs merged to `dmz` after review and validation
-- CI server validates full build of `dmz` HEAD
-- Only clean builds fast-forward `main` to `dmz` HEAD
-- Failed builds keep `main` clean; problematic merges reverted from `dmz`
+
+DMZ git flow will be implemented in the future to support better development practices, scaling, efficiency and developer productivity. Below is an outline of the planned workflow and processes that will be followed:
+
+- Has a shared main repo (`upstream repository`) with two key branches: `main` and `dmz`
+- Each contributor uses their own fork as their workspace
+- Feature branches are sourced from `main` but Pull Requests (PRs) with changes are merged to `dmz` branch
+- `main` branch in the `upstream repository` is always clean (deployable, branchable and reliable). It does not accept PRs created by developers.
+- Developers should push changes to feature branches in their own fork and then create PRs to `dmz` branch in the `upstream repository`.
+- PRs are merged by reviewers to the `dmz` branch after review and validation. Conflicts should be resolved by rebasing onto main.
+- Once a PR has been merged into `dmz` branch the code changes are validated through an automated full build of the `dmz` branch `HEAD` in the Continuous Integration server.
+- The `dmz` branch acts as a staging/integration branch and once several changes are integrated and tested in the `dmz` branch they can be manually merged to the `main` branch using merge commits (usually at the end of 1 or 2 weeks)
+- If the build fails, the changes are or issues are found in the `dmz` branch during integration, the problematic commits can be reverted
 
 ---
 
@@ -112,15 +115,6 @@ This is the **XM Cloud Front End Application Starter Kits** repository containin
 - Main components: `ComponentName.tsx`
 
 ### Import Organization
-
-**Import Order:**
-1. React and Next.js imports
-2. Third-party library imports
-3. Sitecore Content SDK imports
-4. Internal library imports
-5. Component imports
-6. Utility imports
-7. Type imports
 
 **Import Patterns:**
 - Use `type` imports for TypeScript types: `import type React from 'react'`
@@ -213,7 +207,7 @@ examples/[starter-name]/
 
 **Component Files:**
 - Main component file should contain all variants and props following the Locality of Behavior pattern
-- Using `.dev.tsx` files for variant implementations is discouraged unless maintainability becomes difficult for the component and separation cannot be avoided
+- Using `.dev.tsx` files for variant implementations is discouraged unless maintainability becomes dificult for the componenent and seperation can not be avoided
 - Component directories use kebab-case naming
 - Main component files use PascalCase naming
 
@@ -1051,7 +1045,7 @@ export const createMockLayoutData = (overrides = {}) => ({
 ### Coverage Requirements
 
 **Quality Standards:**
-- Tests should be comprehensive enough to cover business logic and to validate that sites and components are working as intended
+- Tests should be comprehensive enough to cover business logic and to validate that sites and componenets are working as intended
 - Ensure different rendering options and scenarios are considered such as Design Library, Page Editor, Preview mode, Hosted Vercel Sites and Local Deployments
 - Test error scenarios and edge cases
 - Maintain test quality over quantity

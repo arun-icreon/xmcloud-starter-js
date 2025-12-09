@@ -95,12 +95,6 @@ The repository includes a **`.windsurfrules`** file for Windsurf's agentic IDE w
   - Testing patterns with Jest/Playwright and coverage expectations
   - Safety rules and development workflow
 
-- **Windsurf Features** - Optimized for:
-  - Multi-line autocompletion with context-aware suggestions
-  - Chat-based code navigation and exploration
-  - Agentic workflows with architectural guidance
-  - Component scaffolding with proper XM Cloud patterns
-
 ### GitHub Copilot Support
 
 The repository includes dedicated GitHub Copilot guidance files:
@@ -145,6 +139,7 @@ When using AI coding assistants:
 - Focus on TypeScript-first development with strict mode
 - Always validate Sitecore datasource existence
 - Implement proper error handling and accessibility features
+- When updating standards, propagate changes to all AI guidance files (Cursor, Windsurf, Copilot)
 
 ### Contributing to AI Guidance
 
