@@ -1,5 +1,5 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
@@ -26,13 +26,13 @@ export const Default = (props: SearchExperienceProps) => {
   const { searchIndex, fieldsMapping } = useSearchField(props.fields.search.value);
 
   const { styles, id, pageSize, columns } = useParams(params);
+  const searchParams = useSearchParams();
 
   const { isEditing, isPreview } = page.mode;
   const [pageNumber, setPageNumber] = useState(1);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>((searchParams.get('q') as string) || '');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [searchEnabled, setSearchEnabled] = useState<boolean>(false);
-  const isInitializedRef = useRef<boolean>(false);
 
   const { total, totalPages, results, isLoading, isSuccess, isError, error } =
     useSearch<SearchDocument>({
@@ -44,7 +44,6 @@ export const Default = (props: SearchExperienceProps) => {
     });
 
   const { setRouterQuery } = useRouter();
-  const searchParams = useSearchParams();
 
   const sendEvent = useEvent({ query: searchQuery, uid: props.rendering.uid });
 
@@ -62,18 +61,13 @@ export const Default = (props: SearchExperienceProps) => {
     if (!routerQuery) {
       setPageNumber(1);
     }
-  }, [inputValue, searchParams]);
+  }, [searchParams]);
 
   useEffect(() => {
     if (isEditing || isPreview) return;
 
-    if (!isInitializedRef.current) {
-      // Enable the search and set the input value from the router query on initial load
-      setSearchEnabled(true);
-      setInputValue(searchParams.get('q') as string);
-      isInitializedRef.current = true;
-    }
-  }, [searchParams, isEditing, isPreview]);
+    setSearchEnabled(true);
+  }, [isEditing, isPreview]);
 
   const onSearchChange = useCallback(
     (value: string, debounced: boolean = true) => {
