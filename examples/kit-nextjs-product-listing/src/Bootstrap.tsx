@@ -3,6 +3,7 @@
 import { useEffect, JSX } from 'react';
 import { initContentSdk } from '@sitecore-content-sdk/nextjs';
 import { eventsPlugin } from '@sitecore-content-sdk/events';
+import { personalizeBrowserPlugin, personalizeBrowserAdapter } from '@sitecore-content-sdk/personalize';
 import { analyticsBrowserAdapter, analyticsPlugin } from '@sitecore-content-sdk/analytics-core';
 import config from 'sitecore.config';
 
@@ -40,6 +41,13 @@ const Bootstrap = ({
             adapter: analyticsBrowserAdapter(),
           }),
           eventsPlugin(),
+          personalizeBrowserPlugin({
+            options: {
+              enablePersonalizeCookie: true,
+              webPersonalization: true,
+            },
+            adapter: personalizeBrowserAdapter(),
+          }),
         ],
       });
     } else {
@@ -51,3 +59,4 @@ const Bootstrap = ({
 };
 
 export default Bootstrap;
+
