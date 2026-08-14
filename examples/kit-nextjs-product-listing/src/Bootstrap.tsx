@@ -6,6 +6,7 @@ import { eventsPlugin } from '@sitecore-content-sdk/events';
 import { personalizeBrowserPlugin, personalizeBrowserAdapter } from '@sitecore-content-sdk/personalize';
 import { analyticsBrowserAdapter, analyticsPlugin } from '@sitecore-content-sdk/analytics-core';
 import config from 'sitecore.config';
+import { isBrowser } from '@/utils/browser';
 
 const Bootstrap = ({
   siteName,
@@ -15,6 +16,8 @@ const Bootstrap = ({
   isPreviewMode: boolean;
 }): JSX.Element | null => {
   useEffect(() => {
+    if (!isBrowser) return;
+
     if (process.env.NODE_ENV === 'development') {
       console.debug('Browser Events SDK is not initialized in development environment');
       return;
