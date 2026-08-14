@@ -97,6 +97,11 @@ const nextConfig: NextConfig = {
         destination: '/api/well-known/ai-txt',
         locale: false,
       },
+      {
+        source: '/.well-known/vercel/flags',
+        destination: '/api/well-known/vercel/flags',
+        locale: false,
+      },
     ];
   },
 };
