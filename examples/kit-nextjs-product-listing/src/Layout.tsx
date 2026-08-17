@@ -56,6 +56,7 @@ const accent = IBM_Plex_Mono({
 // multipromo-3_2
 
 import SitecoreStyles from 'components/content-sdk/SitecoreStyles';
+import { pocFlag } from 'lib/flags';
 
 interface LayoutProps {
   page: Page;
@@ -76,7 +77,7 @@ export interface RouteFields {
   thumbnailImage?: ImageField;
 }
 
-const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
+const Layout = async ({ page, baseUrl: baseUrlProp }: LayoutProps): Promise<JSX.Element> => {
   const { layout } = page;
   const { route } = layout.sitecore;
   const { isEditing } = page.mode;
@@ -97,7 +98,7 @@ const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
     url: baseUrl,
   });
 
-  const poc = await pocFlag();
+  //const poc = await pocFlag();
   return (
     <>
       <Scripts />
@@ -107,13 +108,13 @@ const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
       <SitecoreStyles layoutData={layout} />
       <Providers page={page}>
 
-        {isEditing == "prod-mode" && (
+        {/* {!isEditing && (
           <div className="" data-class-change="true">
             <h2 className="text-2xl font-bold text-center mb-4">
               {poc ? 'Flag is on' : 'Flag is off'}
             </h2>
           </div>
-        )}
+        )} */}
 
         {/* root placeholder for the app, which we add components to using route data */}
         <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
