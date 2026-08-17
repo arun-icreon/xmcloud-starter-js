@@ -97,6 +97,7 @@ const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
     url: baseUrl,
   });
 
+  const poc = await pocFlag();
   return (
     <>
       <Scripts />
@@ -105,6 +106,15 @@ const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
       <StructuredData id="website-schema" data={websiteSchema} />
       <SitecoreStyles layoutData={layout} />
       <Providers page={page}>
+
+        {isEditing == "prod-mode" && (
+          <div className="" data-class-change="true">
+            <h2 className="text-2xl font-bold text-center mb-4">
+              {poc ? 'Flag is on' : 'Flag is off'}
+            </h2>
+          </div>
+        )}
+
         {/* root placeholder for the app, which we add components to using route data */}
         <div className={`min-h-screen flex flex-col ${classNamesMain}`}>
           {page.mode.isDesignLibrary ? (
